@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Lost & Found Hub</title>
+    <!-- Use Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0; /* Light gray background to match prototype */
+        }
+        .sidebar {
+            background-color: #f1f5f9; /* Lighter background for sidebar */
+            border-radius: 12px;
+        }
+        .main-content {
+            background-color: #cbd5e1; /* Slightly darker background for the main content area */
+            border-radius: 12px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .dot-connector {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dot-connector:before, .dot-connector:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            border-bottom: 2px dashed #9ca3af;
+        }
+        .dot-connector:before {
+            left: -35px;
+        }
+        .dot-connector:after {
+            right: -35px;
+        }
+        .match-badge {
+            background-color: #22c55e;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen p-8">
+
+    <!-- Main Container -->
+    <div class="flex-1 flex flex-col max-w-7xl mx-auto w-full">
+
+        <!-- Header -->
+        <div class="bg-slate-800 text-white p-6 rounded-t-xl shadow-lg">
+            <h1 class="text-3xl font-bold text-center tracking-wide">COLLEGE LOST & FOUND HUB</h1>
+        </div>
+
+        <!-- Content Area: Sidebar + Main Content -->
+        <div class="flex-1 flex flex-col md:flex-row bg-slate-200 rounded-b-xl shadow-lg">
+
+            <!-- Sidebar Navigation -->
+            <div class="sidebar w-full md:w-64 p-6 m-4 md:m-0 md:p-6 md:rounded-bl-xl md:rounded-tl-none rounded-xl md:border-r border-gray-300">
+                <nav class="flex flex-col space-y-4">
+                    <a href="#" onclick="showSection('student-login')" class="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-slate-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <span class="font-medium">STUDENT LOGIN</span>
+                    </a>
+                    <a href="#" onclick="showSection('admin-login')" class="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-slate-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span class="font-medium">ADMIN LOGIN</span>
+                    </a>
+                    <hr class="border-gray-300 my-2">
+                    <a href="#" onclick="showSection('lost-found-items')" class="flex items-center space-x-3 p-3 rounded-lg bg-slate-300 text-slate-800 font-semibold shadow-inner">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 20h6a2 2 0 002-2V8a2 2 0 00-2-2H9a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span class="font-medium">LOST & FOUND ITEMS</span>
+                    </a>
+                    <a href="#" onclick="showSection('report-item')" class="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-slate-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <span class="font-medium">REPORT ITEM</span>
+                    </a>
+                    <a href="#" onclick="showSection('search-filter')" class="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-slate-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <span class="font-medium">SEARCH & FILTER</span>
+                    </a>
+                    <hr class="border-gray-300 my-2">
+                    <a href="#" onclick="showSection('matching-suggestions')" class="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-slate-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0 0a6 6 0 016 6v3h-2v-3a4 4 0 00-4-4zM6 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0 0a6 6 0 016 6v3h-2v-3a4 4 0 00-4-4z"></path></svg>
+                        <span class="font-medium">MATCHING SUGGESTIONS</span>
+                    </a>
+                    <a href="#" onclick="showSection('contact-system')" class="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-slate-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.893 5.262L21 8"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.893 18.262L3 13V5h18v8l-7.107 5.262z"></path></svg>
+                        <span class="font-medium">CONTACT SYSTEM</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="main-content flex-1 p-8 m-4 md:m-0 md:rounded-r-xl rounded-xl">
+                
+                <!-- Section: Student Login -->
+                <div id="student-login" class="hidden text-center text-gray-600 p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Student Login</h2>
+                    <p class="mb-4">Enter your student credentials to access the portal.</p>
+                    <form class="max-w-md mx-auto space-y-4">
+                        <input type="email" placeholder="Student Email" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="password" placeholder="Password" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 rounded-md shadow-md hover:bg-indigo-700 transition-colors">Login</button>
+                    </form>
+                </div>
+
+                <!-- Section: Admin Login -->
+                <div id="admin-login" class="hidden text-center text-gray-600 p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Admin Login</h2>
+                    <p class="mb-4">For administrative access only.</p>
+                    <form class="max-w-md mx-auto space-y-4">
+                        <input type="text" placeholder="Admin ID" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="password" placeholder="Password" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <button type="submit" class="w-full bg-red-600 text-white font-semibold py-3 rounded-md shadow-md hover:bg-red-700 transition-colors">Admin Login</button>
+                    </form>
+                </div>
+                
+                <!-- Section: Lost & Found Items and Search -->
+                <div id="lost-found-items" class="p-8">
+                    <!-- Search and Filter Section -->
+                    <div id="search-filter" class="flex flex-col md:flex-row items-center justify-between mb-8">
+                        <div class="relative flex-1 w-full md:w-auto">
+                            <input type="text" placeholder="Search by item, category, location" class="w-full pl-10 pr-4 py-3 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div class="flex items-center space-x-4 mt-4 md:mt-0 md:ml-6">
+                            <span class="text-gray-600 font-semibold">Filter:</span>
+                            <div class="flex space-x-2">
+                                <button class="bg-blue-600 text-white font-medium px-6 py-2 rounded-full shadow-md hover:bg-blue-700 transition-colors">LOST</button>
+                                <button class="bg-gray-300 text-gray-700 font-medium px-6 py-2 rounded-full shadow-md hover:bg-gray-400 transition-colors">FOUND</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lost & Found Items Sections -->
+                    <div class="flex flex-col space-y-8">
+                        
+                        <!-- Lost Items -->
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">LOST ITEMS</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Lost Item Card 1 -->
+                                <div class="card p-6 relative">
+                                    <img src="https://placehold.co/150x150/0000FF/FFFFFF?text=Backpack" alt="Blue Backpack" class="w-24 h-24 rounded-lg mx-auto mb-4">
+                                    <h3 class="text-xl font-semibold mb-2">Blue Backpack</h3>
+                                    <p class="text-sm text-gray-600">Lost near library on Oct 28. Has textbooks &amp; a laptop.</p>
+                                    <p class="text-sm font-semibold text-gray-800 mt-2">Contact: student@college.edu</p>
+                                </div>
+                                <!-- Lost Item Card 2 -->
+                                <div class="card p-6 relative">
+                                    <img src="https://placehold.co/150x150/FF0000/FFFFFF?text=Bottle" alt="Silver Water Bottle" class="w-24 h-24 rounded-lg mx-auto mb-4">
+                                    <h3 class="text-xl font-semibold mb-2">Silver Water Bottle</h3>
+                                    <p class="text-sm text-gray-600">Lost on the tennis courts. Has a small dent on the bottom.</p>
+                                    <p class="text-sm font-semibold text-gray-800 mt-2">Contact: student@college.edu</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Found Items -->
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800 mb-4">FOUND ITEMS</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Found Item Card 1 -->
+                                <div class="card p-6 relative">
+                                    <img src="https://placehold.co/150x150/000000/FFFFFF?text=Keys" alt="Keys with Lanyard" class="w-24 h-24 rounded-lg mx-auto mb-4">
+                                    <h3 class="text-xl font-semibold mb-2">Keys with Lanyard</h3>
+                                    <p class="text-sm text-gray-600">Found in cafeteria on Dec 2nd. Silver car key with a black leather lanyard.</p>
+                                    <p class="text-sm font-semibold text-gray-800 mt-2">Contact: 555-123-4567</p>
+                                </div>
+                                <!-- Found Item Card 2 -->
+                                <div class="card p-6 relative">
+                                    <img src="https://placehold.co/150x150/808080/FFFFFF?text=Scarf" alt="Black Scarf" class="w-24 h-24 rounded-lg mx-auto mb-4">
+                                    <h3 class="text-xl font-semibold mb-2">Black Scarf</h3>
+                                    <p class="text-sm text-gray-600">Found on a bench outside of the student union. Has a small tear on the corner.</p>
+                                    <p class="text-sm font-semibold text-gray-800 mt-2">Contact: 555-987-6543</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Report Item Form -->
+                <div id="report-item" class="hidden text-center text-gray-600 p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Report a Lost or Found Item</h2>
+                    <p class="mb-4">Fill out the form below to report an item.</p>
+                    <form class="max-w-2xl mx-auto space-y-4">
+                        <select class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="lost">I lost an item</option>
+                            <option value="found">I found an item</option>
+                        </select>
+                        <input type="text" placeholder="Item Name" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <textarea placeholder="Description (include details like color, size, etc.)" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                        <input type="text" placeholder="Location (where it was lost/found)" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <input type="file" class="w-full p-3 rounded-md border-gray-300 shadow-sm">
+                        <input type="text" placeholder="Your Contact Information" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-md shadow-md hover:bg-blue-700 transition-colors">Submit Report</button>
+                    </form>
+                </div>
+
+                <!-- Section: Matching Suggestions -->
+                <div id="matching-suggestions" class="hidden text-center text-gray-600 p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Matching Suggestions</h2>
+                    <p class="mb-4">This section will show potential matches for your reported items based on the search criteria.  </p>
+                    <div class="flex justify-center items-center py-8">
+                        <div class="w-full flex justify-center items-center">
+                            <div class="w-40 border-b-2 border-dashed border-gray-400"></div>
+                            <div class="mx-4 p-4 text-center rounded-full bg-blue-100 text-blue-800 font-semibold shadow-inner">
+                                NO MATCHES FOUND
+                            </div>
+                            <div class="w-40 border-b-2 border-dashed border-gray-400"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Contact System -->
+                <div id="contact-system" class="hidden text-center text-gray-600 p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Contact System</h2>
+                    <p class="mb-4">Use this system to securely contact the owner of a matched item without sharing personal information directly.</p>
+                    <form class="max-w-md mx-auto space-y-4">
+                        <input type="text" placeholder="Name of the item" class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <textarea placeholder="Your message..." class="w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                        <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 rounded-md shadow-md hover:bg-green-700 transition-colors">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = ['lost-found-items', 'student-login', 'admin-login', 'contact-system', 'matching-suggestions', 'search-filter', 'report-item'];
+            const navLinks = document.querySelectorAll('nav a');
+
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Handle main content sections
+            const sectionToShow = document.getElementById(sectionId);
+            if (sectionToShow) {
+                if (sectionId === 'search-filter') {
+                    // Show search-filter within lost-found-items container
+                    document.getElementById('lost-found-items').classList.remove('hidden');
+                } else {
+                    sectionToShow.classList.remove('hidden');
+                }
+            }
+
+            // Update active link styling
+            navLinks.forEach(link => {
+                link.classList.remove('bg-slate-300', 'text-slate-800', 'font-semibold', 'shadow-inner');
+                link.classList.add('text-gray-700', 'hover:bg-slate-300');
+            });
+            event.target.closest('a').classList.remove('text-gray-700', 'hover:bg-slate-300');
+            event.target.closest('a').classList.add('bg-slate-300', 'text-slate-800', 'font-semibold', 'shadow-inner');
+        }
+    </script>
+</body>
+</html>
