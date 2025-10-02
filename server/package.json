@@ -1,0 +1,8 @@
+{
+  "name": "lostfound-server",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "mongodb": "^6.20.0"
+  }
+}
