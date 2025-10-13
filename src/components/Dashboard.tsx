@@ -383,10 +383,10 @@ export function Dashboard({ items, claims, user, onNavigate, onRefresh }: Dashbo
                         </p>
                         <div className="flex gap-2">
                           <Button 
-                            size="sm" 
+                            size="sm"
+                            variant="destructive"
                             disabled={disabled}
                             onClick={() => updateClaim(claim, 'accepted')}
-                            className="bg-red-600 hover:bg-red-700"
                           >
                             <Check className="w-4 h-4 mr-1" /> Approve
                           </Button>
